@@ -1,11 +1,14 @@
 const express = require("express");
 const app = express();
-const auth = require("./middleware/auth");
 require("./db/connection");
 
-app.get("/", (req, res) => {
-    res.send("Hello Souvik");
-})
+app.use(express.json());
+
+const register = require("./routers/register");
+const login = require("./routers/login");
+app.use(register);
+app.use(login);
+
 
 const PORT = 3030;
 app.listen(PORT, (err) => {
