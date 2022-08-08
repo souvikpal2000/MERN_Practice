@@ -7,9 +7,12 @@ router.get("/", (req,res) => {
 });
 
 router.post("/register", async (req,res) => {
-    const {name, email, phone, work, password} = req.body;
-    if(!name || !email || !phone || !work || !password){
+    const {name, email, phone, work, password, cpassword} = req.body;
+    if(!name || !email || !phone || !work || !password || !cpassword){
         return res.status(417).json({message: "Fill all the Fields"});
+    }
+    if(password !== cpassword){
+        return res.json({message: "Password doesn't Match"});
     }
     try{
         const user = await User.findOne({email: email});
