@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap');
+body, #root {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+#menu{
+  text-decoration: none;
+  color: rgb(156, 200, 252);
+}
+.navContainer, .footContainer{
+  padding: 1.5rem 3rem 1.5rem 3rem;
+  display: flex;
+  justify-content: space-around;
+	align-items: center;
+  background-color: rgb(13, 10, 24);
+}
+.alignRight{
+	margin-left: auto;
+	width: 20%;
+	display: flex;
+	justify-content: space-between;
+}
+.active{
+  color: white !important;
+}
+.footContainer{
+  margin-top: auto;
+}
+p{
+	margin: 0;
+  color: rgb(156, 200, 252);
+}
+.container{
+	font-family: 'Orbitron', sans-serif;
+	margin-top: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+h1{
+  font-size: 5rem;
+  margin-bottom: 2.5rem;
+}
+h2{
+	font-size: 3rem;
+}
+h3{
+  margin-top: 0;
+  font-size: 2rem;
+}
