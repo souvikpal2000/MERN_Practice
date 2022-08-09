@@ -1,23 +1,26 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Header from "./components/Header";
 import Home from "./components/Home";
 import About from "./components/About";
-import Footer from "./components/Footer";
 import Contact from "./components/Contact";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import Error from "./components/Error";
+import Footer from "./components/Footer";
 
 const App = () => {
 	return(
 		<>
-			<Navbar/>
+			<Header/>
 			<Routes>
-				<Route exact path="/" element={<Home/>} />
-				<Route exact path="/about" element={<About/>} />
-				<Route exact path="/contact" element={<Contact/>} />
-				<Route exact path="/signup" element={<Signup/>} />
-				<Route exact path="/login" element={<Login/>} />
+				<Route path="/" element={<Home/>} />
+				<Route path="/about" element={<About/>} />
+				<Route path="/contact" element={<Contact/>} />
+				<Route path="/signup" element={<Signup/>} />
+				<Route path="/login" element={<Login/>} />
+				<Route path="*" element={<Error/>}/>
+				{/* <Route path="*" element={<Navigate to="/"/>}/> */}
 			</Routes>
 			<Footer/>
 		</>
