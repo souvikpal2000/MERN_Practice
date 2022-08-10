@@ -64,3 +64,24 @@ h3{
   margin-top: 0 !important;
   font-size: 2rem !important;
 }
+.alignItem{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.form, .image{
+  width: 100%;
+}
+button{
+  width: 8rem !important;
+}
+.failure{
+  border-color: red !important;
+}
+.failure:focus{
+  box-shadow: 0 0 0 0.2rem rgba(255, 73, 73, 0.867) !important
+}
+.success:focus{
+  box-shadow: 0 0 0 0.2rem rgb(83, 255, 117) !important
+}
