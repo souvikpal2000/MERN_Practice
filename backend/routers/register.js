@@ -9,19 +9,19 @@ router.get("/", (req,res) => {
 router.post("/register", async (req,res) => {
     const {name, email, phone, work, password, cpassword} = req.body;
     if(!name || !email || !phone || !work || !password || !cpassword){
-        return res.status(417).json({message: "Fill all the Fields"});
+        return res.json({status: 417, message: "Fill all the Fields"});
     }
     if(password !== cpassword){
-        return res.json({message: "Password doesn't Match"});
+        return res.json({status: 401, message: "Password doesn't Match"});
     }
     try{
         const user = await User.findOne({email: email});
         if(user){
-            return res.status(409).json({message: "User already Exist"});
+            return res.json({status: 409, message: "User already Exist"});
         }
         const newUser = new User(req.body);
         await newUser.save();
-        res.status(200).json({message: "User registered Successfully"});
+        res.json({status: 200, message: "User registered Successfully"});
     }
     catch(err){
         res.status(500).json({error: err})
