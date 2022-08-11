@@ -3,7 +3,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import signupPic from "../images/signup.jpg";
-import { Button } from "bootstrap";
 import { useState } from "react";
 
 const Signup = () => {
@@ -12,36 +11,40 @@ const Signup = () => {
         email: "",
         phone: "",
         work: "",
-        password: ""
+        password: "",
+        cpassword: ""
     });
-    const [validate, setValidate] = useState({
-        cpassword: "",
+    const [validate, setValidate] = useState("");
+    const [alert,setAlert] = useState({
+        text: "",
         status: ""
-    });
+    })
 
     const inputValues = (e) => {
         const {name, value} = e.target;
         if(name === "password"){
             if(!value){
-                setValidate({
-                    cpassword: "",
-                    status: ""
-                });
+                setValidate("");
+                setsSignupValue((preValue) => {
+                    return{
+                        ...preValue,
+                        cpassword: ""
+                    }
+                })
             }
-            else if(value && validate.cpassword && value === validate.cpassword){
-                setValidate((preValue) => {
-                    return{
-                        ...preValue,
-                        status: "success"
-                    }
-                })
-            }else if(value && validate.cpassword && value !== validate.cpassword){
-                setValidate((preValue) => {
-                    return{
-                        ...preValue,
-                        status: "failure"
-                    }
-                })
+            else if(signupValue.cpassword && value === signupValue.cpassword){
+                setValidate("success");
+            }else if(signupValue.cpassword && value !== signupValue.cpassword){
+                setValidate("failure");
+            }
+        }else if(name === "cpassword"){
+            if(!value){
+                setValidate("");
+            }
+            else if(signupValue.password && value === signupValue.password){
+                setValidate("success");
+            }else if(signupValue.password && value !== signupValue.password){
+                setValidate("failure");
             }
         }
         setsSignupValue((preValues) => {
@@ -52,28 +55,27 @@ const Signup = () => {
         });
     }
 
-    const checkPass = (e) => {
-        if(!signupValue.password || !e.target.value){
-            setValidate({
-                cpassword: "",
-                status: ""
-            });
-        }
-        else if(signupValue.password === e.target.value && e.target.value){
-            setValidate({
-                cpassword: e.target.value,
-                status: "success"
-            });
-        }else{
-            setValidate({
-                cpassword: e.target.value,
-                status: "failure"
-            });
-        }
-    }
-
-    const submit = (e) => {
+    const submit = async (e) => {
         e.preventDefault();
+        const res = await fetch("/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(signupValue)
+        });
+        const data = await res.json();
+        if(data.status === 200){
+            setAlert({
+                text: data.message,
+                status: "alert-success"
+            })
+        }else{
+            setAlert({
+                text: data.message,
+                status: "alert-danger"
+            })
+        }   
     }
 
     return(
@@ -85,7 +87,14 @@ const Signup = () => {
                             <img src={signupPic} alt="" className="image"/>
                         </Col>
                         <Col className="alignItem">
-                            <form method="POST" action="/register" className="form" onSubmit={submit}>
+                            <div>
+                                {alert.text && 
+                                <div className={'alert' + ' ' + alert.status} role="alert">
+                                    <p>{alert.text}</p>
+                                    <button class="btn-close" aria-label="Close" onClick={() => setAlert("")}></button>
+                                </div>}
+                            </div>
+                            <form method="POST" className="form" onSubmit={submit}>
                                 <div className="form-group row justify-content-center">
                                     <div className="col-12 col-md-10">
                                         <div className="input-group mb-3">
@@ -136,7 +145,7 @@ const Signup = () => {
                                     <div className="col-12 col-md-10">
                                         <div className="input-group mb-3">
                                             <span className="input-group-text" id="basic-addon1">Confirm Password</span>
-                                            <input type="password" name="conPassword" id="conPassword" className={'form-control' + ' ' + validate.status} required onChange={checkPass}/>
+                                            <input type="password" name="cpassword" id="cpassword" className={'form-control' + ' ' + validate} required onChange={inputValues}/>
                                         </div>
                                     </div>
                                 </div>}
