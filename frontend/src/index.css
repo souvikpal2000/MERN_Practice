@@ -97,3 +97,11 @@ button{
 .alert p{
   color: black;
 }
+.loginImage{
+  width: 35rem;
+}
+@media (max-width: 768px) {
+  .alignItem{
+    padding: 1rem;
+  }
+}
