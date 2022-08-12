@@ -69,12 +69,20 @@ const Signup = () => {
             setAlert({
                 text: data.message,
                 status: "alert-success"
-            })
+            });
+            setsSignupValue({
+                name: "",
+                email: "",
+                phone: "",
+                work: "",
+                password: "",
+                cpassword: ""
+            });
         }else{
             setAlert({
                 text: data.message,
                 status: "alert-danger"
-            })
+            });
         }   
     }
 
@@ -83,10 +91,10 @@ const Signup = () => {
             <div className="bodyContainer">
                 <Container>
                     <Row>
-                        <Col className="alignItem">
+                        <Col className="alignItem col-12 col-md-6">
                             <img src={signupPic} alt="" className="image"/>
                         </Col>
-                        <Col className="alignItem">
+                        <Col className="alignItem col-12 col-md-6">
                             <div>
                                 {alert.text && 
                                 <div className={'alert' + ' ' + alert.status} role="alert">
@@ -99,7 +107,7 @@ const Signup = () => {
                                     <div className="col-12 col-md-10">
                                         <div className="input-group mb-3">
                                             <span className="input-group-text" id="basic-addon1">Full Name</span>
-                                            <input type="text" name="name" id="name" className="form-control" required onChange={inputValues}/>
+                                            <input type="text" name="name" id="name" className="form-control" required value={signupValue.name} onChange={inputValues}/>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +116,7 @@ const Signup = () => {
                                     <div className="col-12 col-md-10">
                                         <div className="input-group mb-3">
                                             <span className="input-group-text" id="basic-addon1">Email</span>
-                                            <input type="email" name="email" id="email" className="form-control" required onChange={inputValues}/>
+                                            <input type="email" name="email" id="email" className="form-control" required value={signupValue.email} onChange={inputValues}/>
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +125,7 @@ const Signup = () => {
                                     <div className="col-12 col-md-10">
                                         <div className="input-group mb-3">
                                             <span className="input-group-text" id="basic-addon1">Phone</span>
-                                            <input type="text" name="phone" id="phone" className="form-control" required onChange={inputValues}/>
+                                            <input type="text" name="phone" id="phone" className="form-control" required value={signupValue.phone} onChange={inputValues}/>
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +134,7 @@ const Signup = () => {
                                     <div className="col-12 col-md-10">
                                         <div className="input-group mb-3">
                                             <span className="input-group-text" id="basic-addon1">Work</span>
-                                            <input type="text" name="work" id="work" className="form-control" required onChange={inputValues}/>
+                                            <input type="text" name="work" id="work" className="form-control" required value={signupValue.work} onChange={inputValues}/>
                                         </div>
                                     </div>
                                 </div>
@@ -135,7 +143,7 @@ const Signup = () => {
                                     <div className="col-12 col-md-10">
                                         <div className="input-group mb-3">
                                             <span className="input-group-text" id="basic-addon1">Password</span>
-                                            <input type="password" name="password" id="password" className="form-control" required onChange={inputValues}/>
+                                            <input type="password" name="password" id="password" className="form-control" required value={signupValue.password} onChange={inputValues}/>
                                         </div>
                                     </div>
                                 </div>
@@ -145,7 +153,7 @@ const Signup = () => {
                                     <div className="col-12 col-md-10">
                                         <div className="input-group mb-3">
                                             <span className="input-group-text" id="basic-addon1">Confirm Password</span>
-                                            <input type="password" name="cpassword" id="cpassword" className={'form-control' + ' ' + validate} required onChange={inputValues}/>
+                                            <input type="password" name="cpassword" id="cpassword" className={'form-control' + ' ' + validate} required value={signupValue.cpassword} onChange={inputValues}/>
                                         </div>
                                     </div>
                                 </div>}
