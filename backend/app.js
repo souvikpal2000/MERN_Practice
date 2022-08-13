@@ -8,10 +8,10 @@ app.use(express.json());
 app.use(cookieParser());
 
 const register = require("./routers/register");
-const login = require("./routers/login");
+const loginlogout = require("./routers/loginlogout");
 const about = require("./routers/about");
 app.use(register);
-app.use(login);
+app.use(loginlogout);
 app.use(about);
 
 const PORT = 3030;
