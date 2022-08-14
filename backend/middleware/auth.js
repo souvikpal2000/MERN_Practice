@@ -3,17 +3,18 @@ const User = require("../db/models/users");
 
 const auth = async (req, res, next) => {
     if(!req.cookies.jwt){
-        return res.json({error: "Unauthorized User"});
+        return res.json({error: "Token not Found : Unauthorized User"});
     }
     const token = req.cookies.jwt;
     try{
         const verify = jwt.verify(token, process.env.SECRET_KEY);
-        const checkMail = await User.findOne({email: Object.values(verify)[2].email});
-        if(checkMail){
+        const data = await User.findOne({email: Object.values(verify)[2].email});
+        if(data){
+            req.rootUser = data;
             next();
         }
     }catch(err){
-        return res.json({error: "Unauthorized User"});
+        return res.json({error: "Invalid Token : Unauthorized User"});
     }
 }
 
