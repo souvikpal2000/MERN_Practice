@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import signupPic from "../images/signup.jpg";
-import { useState } from "react";
+import Common from "./common/Common";
 
 const Signup = () => {
     const [signupValue, setsSignupValue] = useState({
@@ -88,6 +88,7 @@ const Signup = () => {
 
     return(
         <>
+            <Common/>
             <div className="bodyContainer">
                 <Container>
                     <Row>

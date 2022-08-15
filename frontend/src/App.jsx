@@ -1,30 +1,32 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useReducer, createContext } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Header from "./components/Header";
-import Home from "./components/Home";
-import About from "./components/About";
-import Contact from "./components/Contact";
-import Signup from "./components/Signup";
-import Login from "./components/Login";
-import Error from "./components/Error";
+import Routing from "./components/Routing";
 import Footer from "./components/Footer";
 
+export const UserContext = createContext();
+export const initialState = null;
+export const reducer = (state, action) => {
+	switch (action.type){
+		case 'loggedIn':
+			state = true;
+			break;
+		case 'loggedOut':
+			state = false;
+			break;
+	}
+	return state;
+} 
 const App = () => {
+	const [state, dispatch] = useReducer(reducer, initialState);
 	return(
-		<>
-			<Header/>
-			<Routes>
-				<Route path="/" element={<Home/>} />
-				<Route path="/about" element={<About/>} />
-				<Route path="/contact" element={<Contact/>} />
-				<Route path="/signup" element={<Signup/>} />
-				<Route path="/login" element={<Login/>} />
-				<Route path="*" element={<Error/>}/>
-				{/* <Route path="*" element={<Navigate to="/"/>}/> */}
-			</Routes>
-			<Footer/>
+		<>	
+			<UserContext.Provider value={{state, dispatch}}>
+				<Header/>
+				<Routing/>
+				<Footer/>
+			</UserContext.Provider>
 		</>
 	)
 }

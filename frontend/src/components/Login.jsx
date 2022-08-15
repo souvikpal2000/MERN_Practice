@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import loginPic from "../images/login.jpg";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Common from "./common/Common";
 
 const Login = () => {
     const [loginValues, setLoginValues] = useState({
@@ -38,7 +38,6 @@ const Login = () => {
             body: JSON.stringify(loginValues)
         })
         const data = await res.json();
-        console.log(data);
         if(data.status === 200){
             setLoginValues({
                 email: "",
@@ -55,6 +54,7 @@ const Login = () => {
 
     return(
         <>
+            <Common/>
             <div className="bodyContainer">
                 <Container>
                     <Row>
