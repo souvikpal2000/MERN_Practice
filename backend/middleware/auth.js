@@ -3,7 +3,7 @@ const User = require("../db/models/users");
 
 const auth = async (req, res, next) => {
     if(!req.cookies.jwt){
-        return res.json({error: "Token not Found : Unauthorized User"});
+        return res.json({status: 502, error: "Token not Found : Unauthorized User"});
     }
     const token = req.cookies.jwt;
     try{
@@ -14,7 +14,7 @@ const auth = async (req, res, next) => {
             next();
         }
     }catch(err){
-        return res.json({error: "Invalid Token : Unauthorized User"});
+        return res.json({status: 401, error: "Invalid Token : Unauthorized User"});
     }
 }
 
