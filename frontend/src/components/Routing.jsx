@@ -10,6 +10,8 @@ import Logout from './Logout';
 import Error from './Error';
 import { useContext } from "react";
 import { UserContext } from "../App";
+import Profile from "./Profile";
+import Timeline from "./Timeline";
 
 const Routing = () => {
     const {state, dispatch} = useContext(UserContext);
@@ -19,7 +21,11 @@ const Routing = () => {
                 <>
                     <Routes>
                         <Route path="/" element={<Home/>} />
-                        <Route path="/about" element={<About/>} />
+                        <Route path="/about" element={<About/>}>
+                            <Route index element={<Profile/>} />
+                            <Route path="/about/profile" element={<Profile/>} />
+                            <Route path="/about/timeline" element={<Timeline/>} />
+                        </Route>
                         <Route path="/contact" element={<Contact/>} />
                         <Route path="/logout" element={<Logout/>}/>
                         <Route path="*" element={<Error/>}/>
