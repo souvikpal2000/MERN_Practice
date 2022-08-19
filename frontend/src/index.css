@@ -100,6 +100,44 @@ button{
 .loginImage{
   width: 40rem;
 }
+.profilePic{
+  width: 10rem !important;
+}
+.picContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.info{
+  padding-left: 2rem !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.info #menu{
+  color: black;
+}
+.navBar{
+  background-color: rgb(229, 229, 229);
+  padding-left: 1rem !important;
+}
+.subOutlet{
+  padding: 1rem 3rem 0rem 3rem !important;
+}
+.profileContainer, .timelineContainer{
+  height: 15rem;
+  display: flex;
+  justify-content: space-between;
+}
+.title, .profileInfo{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.title p{
+  color: black;
+}
 @media (max-width: 768px) {
   .alignItem{
     padding: 1rem;
