@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import Cookies from "js-cookie";
 import { NavLink, useNavigate, Outlet } from "react-router-dom";
 import Common from "./common/Common";
@@ -7,13 +7,38 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Spinner from 'react-bootstrap/Spinner';
 import profilePic from "../images/profile.jpg";
 
 export const UserValueContext = createContext();
 
 const About = () => {
     const navigate = useNavigate();
-    const [userData, setUserData] = useState("");
+    const [state, setState] = useState({
+        showSpinner: "",
+        data: ""
+    });
+
+    /*Child Navbar Activation Problem Fixed -----------*/
+    const [active, setActive] = useState({
+        profile: "active",
+        timeline: "inactive"
+    });
+    const linkActivation = (e) => {
+        const name = e.target.name;
+        if(name === "profile"){
+            setActive({
+                profile: "active",
+                timeline: "inactive"
+            })
+        }else{
+            setActive({
+                profile: "inactive",
+                timeline: "active"
+            })
+        }
+    }
+    /*----------------------------------------------*/
 
     const fetchApi = async () => {
         try{
@@ -29,16 +54,27 @@ const About = () => {
             if(data.status !== 200){
                 throw new Error(data.message);
             }
-            setUserData({
-                id: data.data._id,
-                name: data.data.name,
-                email: data.data.email,
-                phone: data.data.phone,
-                work: data.data.work
-            })
+            setState((preValue) => {
+                return{
+                    ...preValue,
+                    data: data.data
+                }
+            });
+            closeSpinnerIn1Seconds();
         }catch(err){
             navigate("/");
         }
+    }
+
+    const closeSpinnerIn1Seconds = () => {
+        setTimeout(() => {
+            setState((preValue) => {
+                return{
+                    ...preValue,
+                    showSpinner: false
+                }
+            })
+        }, 1000)
     }
 
     useEffect(() => {
@@ -46,6 +82,12 @@ const About = () => {
             navigate("/login");
             return;
         }
+        setState((preValue) => {
+            return{
+                ...preValue,
+                showSpinner: true
+            }
+        });
         fetchApi();
     }, []);
     
@@ -53,21 +95,23 @@ const About = () => {
         <>
             <Common/>
             <div className="bodyContainer">
+                {state.showSpinner === true || state.showSpinner === "" ? 
+                <Spinner animation="border" variant="primary" /> :  
                 <Container>
                     <Row>
                         <Col className="col-12 col-md-2 picContainer">
                             <img src={profilePic} alt="" className="profilePic"/>
                         </Col>
                         <Col className="col-12 col-md-8 info">
-                            <div>
-                                <h4>{userData.name}</h4>
-                                <p>{userData.work}</p>
+                            <div className="nameWork">
+                                <h4>{state.data.name}</h4>
+                                <p>{state.data.work}</p>
                             </div>
-                            <div>
+                            <div className="navigation">
                                 <Navbar className="navBar">
                                     <Nav>
-                                        <NavLink to="/about/profile" id="menu" className="nav-link">Profile</NavLink>
-                                        <NavLink to="/about/timeline" id="menu" className="nav-link">Timeline</NavLink>
+                                        <NavLink to="/about/profile" id="menu" className={'nav-link'+ " " + active.profile} name="profile" onClick={linkActivation}>Profile</NavLink>
+                                        <NavLink to="/about/timeline" id="menu" className={'nav-link'+ " " + active.timeline} name="timeline" onClick={linkActivation}>Timeline</NavLink>
                                     </Nav>
                                 </Navbar>
                             </div>
@@ -78,13 +122,13 @@ const About = () => {
                     </Row>
                     <Row>
                         <Col className="col-md-2"></Col>
-                        <Col className="col-md-8 subOutlet">
-                            <UserValueContext.Provider value={userData}>
+                        <Col className="col-12 col-md-8 subOutlet">
+                            <UserValueContext.Provider value={{state}}>
                                 <Outlet/>
                             </UserValueContext.Provider>
                         </Col>
                     </Row>
-                </Container>
+                </Container>}
             </div>
         </>
     )
