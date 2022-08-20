@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { UserValueContext } from "./About";
 
 const Profile = () => {
-    const value = useContext(UserValueContext);
+    const {state} = useContext(UserValueContext);
     return(
         <>
             <div className="profileContainer">
@@ -14,11 +14,11 @@ const Profile = () => {
                     <p>Profession</p>
                 </div>
                 <div className="profileInfo">
-                    <p>{value.id}</p>
-                    <p>{value.name}</p>
-                    <p>{value.email}</p>
-                    <p>{value.phone}</p>
-                    <p>{value.work}</p>
+                    <p>{state.data._id}</p>
+                    <p>{state.data.name}</p>
+                    <p>{state.data.email}</p>
+                    <p>{state.data.phone}</p>
+                    <p>{state.data.work}</p>
                 </div>
             </div>
         </>
