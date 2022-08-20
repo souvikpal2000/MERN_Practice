@@ -138,8 +138,29 @@ button{
 .title p{
   color: black;
 }
+.navBar .active{
+  color: orange !important;
+}
 @media (max-width: 768px) {
+  .loginImage{
+    width: 30rem;
+  }
   .alignItem{
     padding: 1rem;
+  }
+  .info{
+    padding-left: 12px !important;
+  }
+  .picContainer{
+    padding: 1rem;
+  }
+  .nameWork{
+    padding: 0.5rem 0rem 0.5rem 0rem;
+  }
+  .navigation{
+    padding: 0.5rem 0rem 1rem 0rem;
+  }
+  .subOutlet{
+    padding: 1rem !important;
   }
 }
