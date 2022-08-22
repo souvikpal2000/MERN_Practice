@@ -10,9 +10,11 @@ app.use(cookieParser());
 const register = require("./routers/register");
 const loginlogout = require("./routers/loginlogout");
 const about = require("./routers/about");
+const contact = require("./routers/contact");
 app.use(register);
 app.use(loginlogout);
 app.use(about);
+app.use(contact);
 
 const PORT = 3030;
 app.listen(PORT, (err) => {

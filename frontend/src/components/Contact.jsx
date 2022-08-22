@@ -1,9 +1,85 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Common from "./common/Common";
+import Cookies from "js-cookie";
 
 const Contact = () => {
+    const [contactInfo, setContactInfo] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        message: ""
+    });
+
+    const fetchApi = async () => {
+        try{
+            const res = await fetch("/contact", {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                credentials: "include"
+            });
+            const data = await res.json();
+            if(data.status !== 200){
+                throw new Error(data.message);
+            }
+            setContactInfo((preValue) => {
+                return{
+                    ...preValue,
+                    name: data.data.name,
+                    email: data.data.email,
+                    phone: data.data.phone
+                }
+            })
+        }catch(err){
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        if(!Cookies.get("jwt")){
+            return;
+        }
+        fetchApi();
+    }, []);
+
+    const input = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        setContactInfo((preValue) => {
+            return{
+                ...preValue,
+                [name]: value
+            }
+        })
+    }
+
+    const submit = async (e) => {
+        e.preventDefault();
+        try{
+            const res = await fetch("/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(contactInfo)
+            })
+            const data = await res.json();
+            if(data.status === 200){
+                setContactInfo((preValue) => {
+                    return{
+                        ...preValue,
+                        message: ""
+                    }
+                })
+            }
+        }catch(err){
+            console.log(err);
+        } 
+    }
     return(
         <>
             <Common/>
@@ -40,20 +116,26 @@ const Contact = () => {
                     </div>
                     <div className="contactFormContainer">
                         <div className="contactForm">
-                            <form method="POST" className="form">
-                                <div className="input1">
-                                    <input type="text" name="name" id="name" className="form-control" placeholder="Your Name"/>
-                                    <input type="email" name="email" id="email" className="form-control" placeholder="Your Email"/>
-                                    <input type="text" name="phone" id="phone" className="form-control" placeholder="Your Phone Number"/>
-                                </div>
+                            <form method="POST" className="form" onSubmit={submit}>
+                                {contactInfo.email === "" ? 
+                                    <div className="input1">
+                                        <input type="text" name="name" id="name" className="form-control" placeholder="Your Name" required value={contactInfo.name} onChange={input}/>
+                                        <input type="email" name="email" id="email" className="form-control" placeholder="Your Email" required value={contactInfo.email} onChange={input}/>
+                                        <input type="text" name="phone" id="phone" className="form-control" placeholder="Your Phone Number" required value={contactInfo.phone} onChange={input}/>
+                                    </div> : 
+                                    <div className="input1">
+                                        <input type="text" name="name" id="name" className="form-control" placeholder="Your Name" required value={contactInfo.name} onChange={input} disabled/>
+                                        <input type="email" name="email" id="email" className="form-control" placeholder="Your Email" required value={contactInfo.email} onChange={input} disabled/>
+                                        <input type="text" name="phone" id="phone" className="form-control" placeholder="Your Phone Number" required value={contactInfo.phone} onChange={input} disabled/>
+                                    </div>
+                                }
                                 <div className="input2">
-                                    <textarea required rows="8" name="markdown" id="markdown" class="form-control"></textarea>
+                                    <textarea required rows="8" name="message" id="message" class="form-control" value={contactInfo.message} onChange={input} placeholder="Enter Message..."></textarea>
                                 </div>
-                                <button className="btn btn-success">Submit</button>
+                                <button className="btn btn-primary">Submit</button>
                             </form>
                         </div>
-                    </div>
-                    
+                    </div>  
                 </Container>
             </div>
         </>
