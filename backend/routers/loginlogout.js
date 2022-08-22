@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../db/models/users");
+const {User} = require("../db/models/users");
 const jwt = require("jsonwebtoken");
 
 router.post("/login", async (req,res) => {
