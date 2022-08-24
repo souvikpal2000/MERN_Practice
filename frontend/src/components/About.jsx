@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext } from "react";
 import Cookies from "js-cookie";
-import { NavLink, useNavigate, Outlet } from "react-router-dom";
+import { NavLink, useNavigate, Outlet, useLocation } from "react-router-dom";
 import Common from "./common/Common";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -21,9 +21,10 @@ const About = () => {
 
     /*Child Navbar Activation Problem Fixed -----------*/
     const [active, setActive] = useState({
-        profile: "active",
+        profile: "inactive",
         timeline: "inactive"
     });
+    const location = useLocation();
     const linkActivation = (e) => {
         const name = e.target.name;
         if(name === "profile"){
@@ -38,7 +39,7 @@ const About = () => {
             })
         }
     }
-    /*----------------------------------------------*/
+    /*------------------------------------------------*/
 
     const fetchApi = async () => {
         try{
@@ -82,6 +83,14 @@ const About = () => {
             navigate("/login");
             return;
         }
+        /*Child Navbar Activation Problem Fixed -----------*/
+        if(location.pathname == "/about"){
+            setActive({
+                profile: "active",
+                timeline: "inactive"
+            })
+        }
+        /*------------------------------------------------*/
         setState((preValue) => {
             return{
                 ...preValue,
