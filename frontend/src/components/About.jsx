@@ -132,7 +132,7 @@ const About = () => {
                     <Row>
                         <Col className="col-md-2"></Col>
                         <Col className="col-12 col-md-8 subOutlet">
-                            <UserValueContext.Provider value={{state}}>
+                            <UserValueContext.Provider value={{state, setState}}>
                                 <Outlet/>
                             </UserValueContext.Provider>
                         </Col>

@@ -123,7 +123,7 @@ button{
   padding-left: 1rem !important;
 }
 .subOutlet{
-  padding: 1rem 3rem 0rem 3rem !important;
+  padding: 1rem 2rem 0rem 3rem !important;
 }
 .profileContainer, .timelineContainer{
   height: 15rem;
@@ -218,6 +218,22 @@ textarea{
 .timelineContainer::-webkit-scrollbar {
   display: none;
 }
+.cardBody{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.cross{
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.trashContent{
+  padding: 0rem 1rem 0rem 1rem;
+}
+.content{
+  padding-right: 1rem;
+}
 @media (max-width: 768px) {
   h1{
     font-size: 3.5rem !important;
@@ -284,6 +300,9 @@ textarea{
     font-size: 0.7rem !important;
   }
   .description{
+    font-size: 0.8rem;
+  }
+  .cross{
     font-size: 0.8rem;
   }
 }
