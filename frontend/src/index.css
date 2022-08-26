@@ -234,6 +234,12 @@ textarea{
 .content{
   padding-right: 1rem;
 }
+.btn-close{
+  width: 2rem !important;
+}
+.perDlt{
+  color: #FF5E5E;
+}
 @media (max-width: 768px) {
   h1{
     font-size: 3.5rem !important;
