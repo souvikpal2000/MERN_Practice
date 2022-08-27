@@ -62,6 +62,17 @@ const Timeline = () => {
         setModel({
             id: "",
             show: false
+        });
+
+        fetch(`/timeline/${e.target.id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then((res) => {
+
+        }).catch((err) => {
+            console.log(err);
         })
     }
 
