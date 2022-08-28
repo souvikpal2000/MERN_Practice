@@ -21,14 +21,10 @@ const Routing = () => {
                 <>
                     <Routes>
                         <Route path="/" element={<Home/>} />
-                        <Route path="/about" element={<About/>}>
-                            <Route index element={<Profile/>} />
-                            <Route path="/about/profile" element={<Profile/>} />
-                            <Route path="/about/timeline" element={<Timeline/>} />
-                        </Route>
+                        <Route path="/about" element={<About/>} />
                         <Route path="/contact" element={<Contact/>} />
-                        <Route path="/logout" element={<Logout/>}/>
-                        <Route path="*" element={<Error/>}/>
+                        <Route path="/logout" element={<Logout/>} />
+                        <Route path="*" element={<Error/>} />
                         {/* <Route path="*" element={<Navigate to="/"/>}/> */}
                     </Routes>
                 </>

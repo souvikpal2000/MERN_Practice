@@ -1,14 +1,16 @@
 import React, { useState, useEffect, createContext } from "react";
 import Cookies from "js-cookie";
-import { NavLink, useNavigate, Outlet, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Common from "./common/Common";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import Spinner from 'react-bootstrap/Spinner';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import profilePic from "../images/profile.jpg";
+import Profile from "./Profile";
+import Timeline from "./Timeline";
 
 export const UserValueContext = createContext();
 
@@ -18,28 +20,8 @@ const About = () => {
         showSpinner: "",
         data: ""
     });
-
-    /*Child Navbar Activation Problem Fixed -----------*/
-    const [active, setActive] = useState({
-        profile: "inactive",
-        timeline: "inactive"
-    });
-    const location = useLocation();
-    const linkActivation = (e) => {
-        const name = e.target.name;
-        if(name === "profile"){
-            setActive({
-                profile: "active",
-                timeline: "inactive"
-            })
-        }else{
-            setActive({
-                profile: "inactive",
-                timeline: "active"
-            })
-        }
-    }
-    /*------------------------------------------------*/
+    
+    const [key, setKey] = useState('profile');
 
     const fetchApi = async () => {
         try{
@@ -83,14 +65,6 @@ const About = () => {
             navigate("/login");
             return;
         }
-        /*Child Navbar Activation Problem Fixed -----------*/
-        if(location.pathname == "/about"){
-            setActive({
-                profile: "active",
-                timeline: "inactive"
-            })
-        }
-        /*------------------------------------------------*/
         setState((preValue) => {
             return{
                 ...preValue,
@@ -117,12 +91,10 @@ const About = () => {
                                 <p>{state.data.work}</p>
                             </div>
                             <div className="navigation">
-                                <Navbar className="navBar">
-                                    <Nav>
-                                        <NavLink to="/about/profile" id="menu" className={'nav-link'+ " " + active.profile} name="profile" onClick={linkActivation}>Profile</NavLink>
-                                        <NavLink to="/about/timeline" id="menu" className={'nav-link'+ " " + active.timeline} name="timeline" onClick={linkActivation}>Timeline</NavLink>
-                                    </Nav>
-                                </Navbar>
+                                <Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => setKey(k)} className="tab">
+                                    <Tab eventKey="profile" title="Profile"></Tab>
+                                    <Tab eventKey="timeline" title="Timeline"></Tab>
+                                </Tabs>
                             </div>
                         </Col>
                         <Col className="col-12 col-md-2">
@@ -133,7 +105,7 @@ const About = () => {
                         <Col className="col-md-2"></Col>
                         <Col className="col-12 col-md-8 subOutlet">
                             <UserValueContext.Provider value={{state, setState}}>
-                                <Outlet/>
+                                {key === "profile"? <Profile/> : <Timeline/>}
                             </UserValueContext.Provider>
                         </Col>
                     </Row>
