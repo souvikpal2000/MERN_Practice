@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import Common from "./common/Common";
 import Cookies from "js-cookie";
 
@@ -11,6 +13,27 @@ const Contact = () => {
         phone: "",
         message: ""
     });
+
+    const [show, setShow] = useState(false);
+    const MessageModal = () => {
+        return(
+            <>
+                <Modal show={show} onHide={() => setShow(false)} backdrop="static" keyboard={false}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Message sent Successfully !!!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        You will be contacted Soon.
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={() => setShow(false)}>
+                            Understood
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        )
+    }
 
     const fetchApi = async () => {
         try{
@@ -74,7 +97,8 @@ const Contact = () => {
                         ...preValue,
                         message: ""
                     }
-                })
+                });
+                setShow(true);
             }
         }catch(err){
             console.log(err);
@@ -138,6 +162,7 @@ const Contact = () => {
                     </div>  
                 </Container>
             </div>
+            <MessageModal/>
         </>
     )
 }
