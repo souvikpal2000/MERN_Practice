@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const messageSchema = new mongoose.Schema({
+const replySchema = new mongoose.Schema({
     desc:{
         type: String,
         required: true
@@ -10,6 +10,18 @@ const messageSchema = new mongoose.Schema({
         default: Date.now
     }
 })
+
+const messageSchema = new mongoose.Schema({
+    desc:{
+        type: String,
+        required: true
+    },
+    createdAt:{
+        type: Date,
+        default: Date.now
+    },
+    replies: [replySchema]
+});
 
 const userSchema = new mongoose.Schema({
     name:{
@@ -35,7 +47,8 @@ const userSchema = new mongoose.Schema({
     messages: [messageSchema]
 });
 
+const Reply = new mongoose.model("reply", replySchema);
 const Message = new mongoose.model("message", messageSchema);
 const User = new mongoose.model("user", userSchema);
 
-module.exports = { Message, User };
+module.exports = { Reply, Message, User };
