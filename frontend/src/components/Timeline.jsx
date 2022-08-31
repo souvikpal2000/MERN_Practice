@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserValueContext } from "./About";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useState } from "react";
+import Offcanvas from 'react-bootstrap/Offcanvas';
 
 const Timeline = () => {
     const {state, setState} = useContext(UserValueContext);
@@ -76,6 +76,53 @@ const Timeline = () => {
         })
     }
 
+    const [showOffCanvas, setShowOffCanvas] = useState({
+        messageId: "",
+        show: false
+    });
+    const showCanvas = (e) => {
+        setShowOffCanvas({
+            messageId: e.target.id,
+            show: true
+        })
+    }
+    const closeCanvas = () => {
+        setShowOffCanvas({
+            messageId: "",
+            show: false
+        })
+    }
+    const Canvas = () => {
+        const message = messages.filter((msg, index) => {
+            return index == showOffCanvas.messageId
+        });
+        const {replies} = {...message[0]};
+        return(
+            <>
+                {replies !== undefined? 
+                <Offcanvas show={showOffCanvas.show} onHide={closeCanvas} placement="end">
+                    <Offcanvas.Header closeButton>
+                        <Offcanvas.Title>Replies</Offcanvas.Title>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                        {replies.map((reply) => {
+                            return(
+                                <Card>
+                                    <Card.Body className="cardBody">
+                                        <div className="content">
+                                            <Card.Subtitle className="mb-2 text-muted date">{reply.createdAt.substring(0,10)}</Card.Subtitle>
+                                            <Card.Text className="description">{reply.desc}</Card.Text>
+                                        </div>
+                                    </Card.Body>
+                                </Card>
+                            )
+                        })}
+                    </Offcanvas.Body>
+                </Offcanvas> : null}
+            </>
+        )
+    }
+
     return(
         <>
             <div className="timelineContainer">
@@ -88,6 +135,7 @@ const Timeline = () => {
                                     <Card.Text className="description">{msg.desc}</Card.Text>
                                 </div>
                                 <div className="trashContent">
+                                    {msg.replies.length !== 0? <p id={index} className="reply" onClick={showCanvas}>✉️</p> : null}
                                     <p id={index} onClick={showModel} className="cross">❌</p>
                                 </div>
                             </Card.Body>
@@ -96,6 +144,7 @@ const Timeline = () => {
                 })}
             </div>
             <VerticallyAlignedModel/>
+            <Canvas/>
         </>
     )
 }

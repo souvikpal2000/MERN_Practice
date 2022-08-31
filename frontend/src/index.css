@@ -220,12 +220,14 @@ textarea{
   justify-content: space-between;
   align-items: center;
 }
-.cross{
+.cross, .reply{
   font-size: 1.2rem;
   cursor: pointer;
+  margin: 0.4rem !important;
 }
 .trashContent{
   padding: 0rem 1rem 0rem 1rem;
+  display: flex;
 }
 .content{
   padding-right: 1rem;
@@ -289,8 +291,11 @@ textarea{
   .input1{
     padding-bottom: 0rem;
   }
-  .profileContainer p, .tab{
+  .profileContainer p{
     font-size: 0.8rem;
+  }
+  .tab{
+    font-size: 0.9rem;
   }
   .nameWork h4{
     font-size: 1rem;
@@ -304,7 +309,7 @@ textarea{
   .description{
     font-size: 0.8rem;
   }
-  .cross{
+  .cross, .reply{
     font-size: 0.8rem;
   }
 }
