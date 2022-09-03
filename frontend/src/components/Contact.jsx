@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { UserContext } from "../App";
 import Common from "./common/Common";
 import Cookies from "js-cookie";
 
 const Contact = () => {
+    const {state} = useContext(UserContext);
     const [contactInfo, setContactInfo] = useState({
         name: "",
         email: "",
@@ -141,7 +143,7 @@ const Contact = () => {
                     <div className="contactFormContainer">
                         <div className="contactForm">
                             <form method="POST" className="form" onSubmit={submit}>
-                                {contactInfo.email === "" ? 
+                                {state === false? 
                                     <div className="input1">
                                         <input type="text" name="name" id="name" className="form-control" placeholder="Your Name" required value={contactInfo.name} onChange={input}/>
                                         <input type="email" name="email" id="email" className="form-control" placeholder="Your Email" required value={contactInfo.email} onChange={input}/>
