@@ -11,10 +11,12 @@ const register = require("./routers/register");
 const loginlogout = require("./routers/loginlogout");
 const about = require("./routers/about");
 const contact = require("./routers/contact");
+const admin = require("./routers/admin");
 app.use(register);
 app.use(loginlogout);
 app.use(about);
 app.use(contact);
+app.use(admin);
 
 const PORT = 3030;
 app.listen(PORT, (err) => {
