@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { Routes, Route } from "react-router-dom";
 
 import Home from './Home';
 import About from './About';
@@ -8,13 +8,11 @@ import Signup from './Signup';
 import Login from './Login';
 import Logout from './Logout';
 import Error from './Error';
-import { useContext } from "react";
 import { UserContext } from "../App";
-import Profile from "./Profile";
-import Timeline from "./Timeline";
+import Admin from "./Admin";
 
 const Routing = () => {
-    const {state, dispatch} = useContext(UserContext);
+    const {state} = useContext(UserContext);
     const Render = () => {
         if(state){
             return(
@@ -24,6 +22,7 @@ const Routing = () => {
                         <Route path="/about" element={<About/>} />
                         <Route path="/contact" element={<Contact/>} />
                         <Route path="/logout" element={<Logout/>} />
+                        <Route path="/admin" element={<Admin/>} />
                         <Route path="*" element={<Error/>} />
                         {/* <Route path="*" element={<Navigate to="/"/>}/> */}
                     </Routes>
@@ -38,6 +37,7 @@ const Routing = () => {
                         <Route path="/contact" element={<Contact/>} />
                         <Route path="/signup" element={<Signup/>} />
                         <Route path="/login" element={<Login/>} />
+                        <Route path="/admin" element={<Admin/>} />
                         <Route path="*" element={<Error/>}/>
                         {/* <Route path="*" element={<Navigate to="/"/>}/> */}
                     </Routes>
