@@ -11,6 +11,10 @@ body, #root {
   height: 100vh;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
@@ -238,6 +242,35 @@ textarea{
 .perDlt{
   color: #FF5E5E;
 }
+.profileCard{
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 12rem;
+  row-gap: 1rem;
+}
+.card{
+  width: 100%;
+}
+.pagination, .page{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.page{
+  width: 4rem;
+  padding: 1rem;
+  margin: 0rem 1rem 1rem 1rem ;
+  border-radius: 100%;
+}
+.page p{
+  color: black;
+  cursor: pointer;
+}
+.email{
+  color: grey;
+  padding-bottom: 1rem;
+}
 @media (max-width: 768px) {
   h1{
     font-size: 3.5rem !important;
@@ -311,5 +344,9 @@ textarea{
   }
   .cross, .reply{
     font-size: 0.8rem;
+  }
+  .profileCard{
+    grid-template-columns: auto;
+    row-gap: 1rem;
   }
 }
