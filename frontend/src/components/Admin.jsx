@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import Container from "react-bootstrap/Container";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -7,10 +7,18 @@ import Common from "./common/Common";
 import ProfilePic from "../images/profile.jpg";
 import Pagination from "./Pagination";
 
+export const PaginationContext = createContext();
+
 const Admin = () => {
     const [spinner, setSpinner] = useState(true);
     const [users, setUsers] = useState([]);
 
+    const [page, setPage] = useState({
+        pageNo: 0,
+        start: 0,
+        end: 2
+    });
+    
     useEffect(() => {
         fetch("/admin", {
             method: "GET",
@@ -46,21 +54,25 @@ const Admin = () => {
                 <Container> 
                     <div className="profileCard">
                         {users.map((user,index) => {
-                            return(
-                                <Card key={index}>
-                                    <Card.Img variant="top" src={ProfilePic} />
-                                    <Card.Body>
-                                        <Card.Title>{user.name}</Card.Title>
-                                        <Card.Text className="email">
-                                            {user.email}
-                                        </Card.Text>
-                                        <Button variant="secondary">Messages</Button>
-                                    </Card.Body>
-                                </Card>
-                            )
+                            if(page.start <= index && index <= page.end){
+                                return(
+                                    <Card key={index}>
+                                        <Card.Img variant="top" src={ProfilePic} />
+                                        <Card.Body>
+                                            <Card.Title>{user.name}</Card.Title>
+                                            <Card.Text className="email">
+                                                {user.email}
+                                            </Card.Text>
+                                            <Button variant="secondary">Messages</Button>
+                                        </Card.Body>
+                                    </Card>
+                                )
+                            }
                         })}
-                    </div>       
-                    <Pagination users={users}/>    
+                    </div>
+                    <PaginationContext.Provider value={{page, setPage}}>
+                        <Pagination users={users}/>
+                    </PaginationContext.Provider>      
                 </Container>}
             </div>
         </>
