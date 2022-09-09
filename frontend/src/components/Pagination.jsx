@@ -19,7 +19,7 @@ const Pagination = ({users}) => {
         })
     }
 
-    const leftArrow = () => {
+    const previousPage = () => {
         setPage((preValue) => {
             return{
                 pageNo: preValue.pageNo - 1,
@@ -29,7 +29,7 @@ const Pagination = ({users}) => {
         })
     }
 
-    const rightArrow = () => {
+    const nextPage = () => {
         setPage((preValue) => {
             return{
                 pageNo: preValue.pageNo + 1,
@@ -38,12 +38,31 @@ const Pagination = ({users}) => {
             }
         })
     }
+
+    const jumpToFirst = () => {
+        setPage({
+            pageNo: 0,
+            start: 0,
+            end: 2
+        })
+    }
+
+    const jumpToLast = () => {
+        setPage({
+            pageNo: noOfPages - 1,
+            start: (noOfPages - 1) * 3,
+            end: ((noOfPages - 1) * 3) + 2
+        })
+    }
     
     return(
         <>
             {noOfPages > 1 && <div className="pagination">
+                <div className="page">
+                    {currentPage !== 0 && <p onClick={jumpToFirst}>&#xab;</p>}
+                </div>
                 <div className="page leftArrow">
-                    {currentPage !== 0 && <p onClick={leftArrow}>&#8249;</p>}
+                    {currentPage !== 0 && <p onClick={previousPage}>&#8249;</p>}
                 </div>
                 {pages.map((page,index) => {
                     if(Math.abs(currentPage - index) < 2){
@@ -56,7 +75,10 @@ const Pagination = ({users}) => {
                    
                 })}
                 <div className="page rightArrow">
-                    {currentPage < (noOfPages-1) && <p onClick={rightArrow}>&#8250;</p>}
+                    {currentPage < (noOfPages-1) && <p onClick={nextPage}>&#8250;</p>}
+                </div>
+                <div className="page">
+                    {currentPage < (noOfPages-1) && <p onClick={jumpToLast}>&#xbb;</p>}
                 </div>
             </div>}
         </>

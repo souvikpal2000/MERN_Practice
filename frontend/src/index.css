@@ -245,8 +245,8 @@ textarea{
 .profileCard{
   padding: 2rem 2rem 1rem 2rem;
   display: grid;
-  grid-template-columns: 22% 22% 22%;
-  justify-content: space-around;
+  grid-template-columns: 25% 25% 25%;
+  justify-content: space-between;
   row-gap: 1rem;
 }
 .card{
@@ -260,7 +260,7 @@ textarea{
 .page{
   width: 4rem;
   padding: 1rem;
-  margin: 0rem 1rem 1rem 1rem ;
+  margin: 0rem 0.5rem 1rem 0.5rem ;
   border-radius: 100%;
 }
 .page p{
@@ -268,7 +268,7 @@ textarea{
   cursor: pointer;
 }
 #active{
-  background-color: orange;
+  background-color: #0d6efd;
 }
 #active p{
   color: white;
@@ -276,6 +276,17 @@ textarea{
 .email{
   color: grey;
   padding-bottom: 1rem;
+}
+.search{
+  margin: auto;
+  width: 40% !important;
+}
+.adminContainer{
+  font-family: 'Orbitron', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 @media (max-width: 768px) {
   h1{
@@ -352,7 +363,22 @@ textarea{
     font-size: 0.8rem;
   }
   .profileCard{
-    grid-template-columns: auto;
-    row-gap: 1rem;
+    display: grid;
+    grid-template-columns: 85%;
+    justify-content: center;
+  }
+  .adminContent{
+    height: 100vh;
+  }
+  .search{
+    width: 85% !important;
+    margin-top: 2rem;
+  }
+  .page{
+    width: 3rem;
+    padding: 0.8rem;
+    margin: 0rem 0.5rem 2rem 0.5rem ;
+    border-radius: 100%;
+    font-size: 0.8rem;
   }
 }
