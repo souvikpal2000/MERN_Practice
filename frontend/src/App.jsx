@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from "./components/Header";
 import Routing from "./components/Routing";
 import Footer from "./components/Footer";
+import { useLocation } from "react-router-dom";
 
 export const UserContext = createContext();
 export const initialState = null;
@@ -19,13 +20,14 @@ export const reducer = (state, action) => {
 	return state;
 } 
 const App = () => {
+	const location = useLocation();
 	const [state, dispatch] = useReducer(reducer, initialState);
 	return(
 		<>	
 			<UserContext.Provider value={{state, dispatch}}>
-				<Header/>
+				{location.pathname !== "/admin" && <Header/>}
 				<Routing/>
-				<Footer/>
+				{location.pathname !== "/admin" && <Footer/>}
 			</UserContext.Provider>
 		</>
 	)

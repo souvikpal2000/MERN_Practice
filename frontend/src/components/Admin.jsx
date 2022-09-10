@@ -6,6 +6,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Common from "./common/Common";
 import ProfilePic from "../images/profile.jpg";
 import Pagination from "./Pagination";
+import Search from "./Search";
 
 export const PaginationContext = createContext();
 
@@ -48,10 +49,11 @@ const Admin = () => {
     return(
         <>
             <Common/>
-            <div className="bodyContainer">
+            <div className="adminContainer">
                 {spinner === true? 
                 <Spinner animation="border" variant="secondary" /> :
-                <Container> 
+                <Container className="adminContent"> 
+                    <Search/>
                     <div className="profileCard">
                         {users.map((user,index) => {
                             if(page.start <= index && index <= page.end){
@@ -63,7 +65,7 @@ const Admin = () => {
                                             <Card.Text className="email">
                                                 {user.email}
                                             </Card.Text>
-                                            <Button variant="secondary">Messages</Button>
+                                            <Button variant="primary">Messages</Button>
                                         </Card.Body>
                                     </Card>
                                 )
