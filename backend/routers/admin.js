@@ -11,4 +11,16 @@ router.get("/admin", async (req,res) => {
     }
 });
 
+router.get("/messages/:email", async (req,res) => {
+    try{
+        const user = await User.findOne({email: req.params.email});
+        if(user){
+            return res.json({status: 200, messages: user.messages});
+        }
+        res.json({status: 404, message: "This Email is not Registered"});
+    }catch(err){
+        res.json({status: 500, message: "Internal Server Error"});
+    }
+})
+
 module.exports = router;
