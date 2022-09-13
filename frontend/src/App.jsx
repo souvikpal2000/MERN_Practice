@@ -25,9 +25,9 @@ const App = () => {
 	return(
 		<>	
 			<UserContext.Provider value={{state, dispatch}}>
-				{location.pathname !== "/admin" && <Header/>}
+				{location.pathname.includes("/admin") === false && <Header/>}
 				<Routing/>
-				{location.pathname !== "/admin" && <Footer/>}
+				{location.pathname.includes("/admin") === false && <Footer/>}
 			</UserContext.Provider>
 		</>
 	)
