@@ -10,6 +10,7 @@ import Logout from './Logout';
 import Error from './Error';
 import { UserContext } from "../App";
 import Admin from "./Admin";
+import Messages from "./Messages";
 
 const Routing = () => {
     const {state} = useContext(UserContext);
@@ -23,6 +24,7 @@ const Routing = () => {
                         <Route path="/contact" element={<Contact/>} />
                         <Route path="/logout" element={<Logout/>} />
                         <Route path="/admin" element={<Admin/>} />
+                        <Route path="/admin/viewmsg/:email" element={<Messages/>} />
                         <Route path="*" element={<Error/>} />
                         {/* <Route path="*" element={<Navigate to="/"/>}/> */}
                     </Routes>
@@ -38,6 +40,7 @@ const Routing = () => {
                         <Route path="/signup" element={<Signup/>} />
                         <Route path="/login" element={<Login/>} />
                         <Route path="/admin" element={<Admin/>} />
+                        <Route path="/admin/viewmsg/:email" element={<Messages/>} />
                         <Route path="*" element={<Error/>}/>
                         {/* <Route path="*" element={<Navigate to="/"/>}/> */}
                     </Routes>

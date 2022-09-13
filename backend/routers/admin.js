@@ -11,7 +11,7 @@ router.get("/admin", async (req,res) => {
     }
 });
 
-router.get("/messages/:email", async (req,res) => {
+router.get("/admin/viewmsg/:email", async (req,res) => {
     try{
         const user = await User.findOne({email: req.params.email});
         if(user){

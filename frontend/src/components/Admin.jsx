@@ -1,6 +1,6 @@
 import React, { useEffect, useState, createContext } from "react";
 import Container from "react-bootstrap/Container";
-import Button from 'react-bootstrap/Button';
+import { NavLink } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
 import Common from "./common/Common";
@@ -65,7 +65,7 @@ const Admin = () => {
                                             <Card.Text className="email">
                                                 {user.email}
                                             </Card.Text>
-                                            <Button variant="primary">Messages</Button>
+                                            <NavLink to={"/admin/viewmsg/"+user.email} className="btn btn-primary">Messages</NavLink>
                                         </Card.Body>
                                     </Card>
                                 )
