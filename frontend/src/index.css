@@ -288,6 +288,14 @@ textarea{
   align-items: center;
   height: 100vh;
 }
+.replyContainer{
+  width: 75% !important;
+  float: right;
+}
+.minus, .plus{
+  cursor: pointer;
+  margin: 0.4rem 0.4rem 0.4rem 2rem!important;
+}
 @media (max-width: 768px) {
   h1{
     font-size: 3.5rem !important;
