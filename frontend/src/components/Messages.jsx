@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Card from 'react-bootstrap/Card';
 
 const Messages = () => {
     const location = useLocation();
     const [messages, setMessages] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(location.pathname, {
@@ -24,6 +25,10 @@ const Messages = () => {
         })
     }, []);
 
+    const deleteReply = () => {
+
+    }
+
     const ReplyCard = ({...reply}) => {
         return(
             <>
@@ -34,7 +39,7 @@ const Messages = () => {
                             <Card.Text className="description">{reply.desc}</Card.Text>
                         </div>
                         <div className="trashContent">
-                            <p className="cross">❌</p>
+                            <p className="cross" onClick={deleteReply}>❌</p>
                         </div>
                     </Card.Body>
                 </Card>
@@ -75,12 +80,18 @@ const Messages = () => {
 
     return(
         <>
-            <Container>
-                {messages.map((message, index) => {
-                    return(
-                        <MessageCard key={index} {...message}/>
-                    )
-                })}
+            <Container className="messageContainer">
+                <div className="messageHeading">
+                    <h2>Messages</h2>
+                    <button className="btn btn-primary" onClick={() => navigate("/admin")}>Go Back</button>
+                </div>
+                <div className="messages">
+                    {messages.map((message, index) => {
+                        return(
+                            <MessageCard key={index} {...message}/>
+                        )
+                    })}
+                </div>
             </Container>
         </>
     )

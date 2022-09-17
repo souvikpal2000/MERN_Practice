@@ -296,6 +296,28 @@ textarea{
   cursor: pointer;
   margin: 0.4rem 0.4rem 0.4rem 2rem!important;
 }
+.messageContainer{
+  height: 100vh;
+}
+.messageHeading{
+  border-bottom: 2px solid grey;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #0d6efd;
+}
+.messageHeading button{
+  height: 3rem;
+}
+.messageContainer .messages{
+  height: 80vh;
+  padding: 1rem;
+  overflow-y: scroll;
+}
+.messageContainer .messages::-webkit-scrollbar {
+  display: none;
+}
 @media (max-width: 768px) {
   h1{
     font-size: 3.5rem !important;
@@ -372,7 +394,7 @@ textarea{
   }
   .profileCard{
     display: grid;
-    grid-template-columns: 85%;
+    grid-template-columns: 100%;
     justify-content: center;
   }
   .adminContent{
@@ -388,5 +410,11 @@ textarea{
     margin: 0rem 0.5rem 2rem 0.5rem ;
     border-radius: 100%;
     font-size: 0.8rem;
+  }
+  .replyContainer{
+    width: 90% !important;
+  }
+  .messageHeading h2{
+    font-size: 2rem !important;
   }
 }
