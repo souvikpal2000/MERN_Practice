@@ -318,6 +318,14 @@ textarea{
 .messageContainer .messages::-webkit-scrollbar {
   display: none;
 }
+.noMessageContainer{
+  height: 100vh;
+  font-family: 'Orbitron', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 @media (max-width: 768px) {
   h1{
     font-size: 3.5rem !important;
@@ -416,5 +424,16 @@ textarea{
   }
   .messageHeading h2{
     font-size: 2rem !important;
+  }
+  .noMessageContainer h1{
+    font-size: 2.5rem !important;
+  }
+  .goBack{
+    width: 6rem !important;
+    font-size: 0.9rem !important;
+  }
+  .giveReply{
+    width: 5rem !important;
+    font-size: 0.7rem !important;
   }
 }
