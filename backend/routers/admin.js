@@ -15,11 +15,43 @@ router.get("/admin/viewmsg/:email", async (req,res) => {
     try{
         const user = await User.findOne({email: req.params.email});
         if(user){
-            return res.json({status: 200, messages: user.messages});
+            return res.json({status: 200, user: {email: user.email, messages: user.messages}});
         }
         res.json({status: 404, message: "This Email is not Registered"});
     }catch(err){
         res.json({status: 500, message: "Internal Server Error"});
+    }
+});
+
+router.delete("/delreply/:email/:messageId/:replyId", async (req,res) => {
+    const email = req.params.email;
+    const messageId = req.params.messageId;
+    const replyId = req.params.replyId;
+    try{
+        const userData = await User.findOne({email: email});
+        if(userData){
+            const { messages } = userData;
+            const message = messages[messageId]
+            if(message === undefined){
+                return res.status(403).json({message: "Message Unavailable"});
+            }
+            const { replies } = message;
+            const reply = replies[replyId];
+            if(reply === undefined){
+                return res.status(403).json({message: "Reply Unavailable"});
+            }
+            const updatedReplies = replies.filter((reply, index) => {
+                return index != replyId
+            });
+            userData.messages[messageId].replies = updatedReplies;
+            await userData.save();
+            res.json({status: 200});
+        }else{
+            res.status(401).json({message: "This Email is not Registered"});
+        }
+    }
+    catch(err){
+        console.log(err);
     }
 })
 
