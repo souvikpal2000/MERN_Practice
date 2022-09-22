@@ -436,4 +436,9 @@ textarea{
     width: 5rem !important;
     font-size: 0.7rem !important;
   }
+  .modal{
+    width: 95% !important;
+    right: 0;
+    margin: auto;
+  }
 }
