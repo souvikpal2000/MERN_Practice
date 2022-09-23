@@ -1,5 +1,5 @@
 import React, { useEffect, useState, createContext, useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Card from 'react-bootstrap/Card';
 import Spinner from "react-bootstrap/Spinner";
@@ -38,6 +38,7 @@ const ReplyCard = ({messageId, replyId, ...reply}) => {
 
 const MessageCard = ({messageId, ...message}) => {
     const [showReplies, setShowReplies] = useState(false);
+    const {user} = useContext(ModelContext);
     return(
         <>
             <Card>
@@ -47,7 +48,7 @@ const MessageCard = ({messageId, ...message}) => {
                         <Card.Text className="description">{message.desc}</Card.Text>
                     </div>
                     <div className="trashContent">
-                        <button className="btn btn-secondary giveReply">Give Reply</button>
+                        <NavLink to={`/adminreply/${user.email}/${messageId}`} className="btn btn-secondary giveReply">Give Reply</NavLink>
                         {message.replies.length>0? 
                         <div>
                             {showReplies? <p className="minus" onClick={() => setShowReplies(!showReplies)}>➖</p> : <p className="plus" onClick={() => setShowReplies(!showReplies)}>➕</p>}
@@ -78,7 +79,7 @@ const VerticallyAlignedModel = () => {
             replyId: ""
         })
     }
-    
+
     const deleteMessage = () => {
         const {messages} = user;
         const {replies} = messages[model.messageId];
@@ -97,6 +98,20 @@ const VerticallyAlignedModel = () => {
             email: "",
             messagesId: "",
             replyId: ""
+        });
+
+        fetch(`/delreply/${model.email}/${model.messageId}/${model.replyId}`, {
+            method: "DELETE",
+            headers:{
+                "Content-Type": "application/json"
+            }
+        }).then(async (res) => {
+            const data = await res.json();
+            if(data.status === 200){
+                console.log("Reply Deleted !!");
+            }
+        }).catch((err) => {
+
         })
     }
 
