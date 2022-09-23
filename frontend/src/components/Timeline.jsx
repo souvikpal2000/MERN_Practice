@@ -69,8 +69,11 @@ const Timeline = () => {
             headers: {
                 "Content-Type": "application/json"
             }
-        }).then((res) => {
-
+        }).then(async (res) => {
+            const data = await res.json();
+            if(data.status === 200){
+                console.log("Message Deleted !!");
+            }
         }).catch((err) => {
             console.log(err);
         })
