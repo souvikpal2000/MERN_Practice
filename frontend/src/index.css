@@ -326,6 +326,25 @@ textarea{
   justify-content: center;
   align-items: center;
 }
+.replyFormContainer{
+  height: 80vh;
+  display: grid; 
+  grid-template-columns: 50% 50%;
+  align-items: center;
+}
+.giveReplyImage{
+  width: 35rem;
+}
+.replyFormContainer form{
+  width: 80%;
+}
+.reply{
+  margin: 0rem 0rem 0.7rem 0rem !important;
+  color: #0d6efd;
+}
+.sendReply{
+  margin: 1rem 0rem 0rem 0rem;
+}
 @media (max-width: 768px) {
   h1{
     font-size: 3.5rem !important;
@@ -440,5 +459,16 @@ textarea{
     width: 95% !important;
     right: 0;
     margin: auto;
+  }
+  .giveReplyImage{
+    width: 24rem;
+  }
+  .replyFormContainer{
+    height: 80vh;
+    display: grid;
+    grid-template-columns: 100%;
+  }
+  .replyFormContainer form{
+    width: 100%;
   }
 }
