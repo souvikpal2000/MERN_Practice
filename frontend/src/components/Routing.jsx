@@ -43,7 +43,7 @@ const Routing = () => {
                         <Route path="/login" element={<Login/>} />
                         <Route path="/admin" element={<Admin/>} />
                         <Route path="/admin/viewmsg/:email" element={<Messages/>} />
-                        <Route path="/reply/:email/:messageId" element={<GiveReply/>} />
+                        <Route path="/adminreply/:email/:messageId" element={<GiveReply/>} />   
                         <Route path="*" element={<Error/>}/>
                         {/* <Route path="*" element={<Navigate to="/"/>}/> */}
                     </Routes>
