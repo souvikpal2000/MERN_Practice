@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
 import Common from "./common/Common";
 import ProfilePic from "../images/profile.jpg";
+import NotificationBell from "../images/notification.gif"
 import Pagination from "./Pagination";
 import Search from "./Search";
 
@@ -65,7 +66,12 @@ const Admin = () => {
                                             <Card.Text className="email">
                                                 {user.email}
                                             </Card.Text>
-                                            <NavLink to={"/admin/viewmsg/"+user.email} className="btn btn-primary">Messages</NavLink>
+                                            <div className="cardFooter">
+                                                <NavLink to={"/admin/viewmsg/"+user.email} className="btn btn-primary">Messages</NavLink>
+                                                {user.messages.some((message) => {
+                                                    return message.replies.length === 0;
+                                                }) ? <img src={NotificationBell} alt="Notification Bell" className="notificationBell"/> : null}
+                                            </div>
                                         </Card.Body>
                                     </Card>
                                 )

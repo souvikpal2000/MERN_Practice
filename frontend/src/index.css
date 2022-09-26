@@ -345,6 +345,17 @@ textarea{
 .sendReply{
   margin: 1rem 0rem 0rem 0rem;
 }
+.messageReply{
+  margin-bottom: 0.7rem !important;
+}
+.cardFooter{
+  display: flex;
+  justify-content: space-between;
+}
+.notificationBell{
+  width: 2rem;
+  cursor: pointer;
+}
 @media (max-width: 768px) {
   h1{
     font-size: 3.5rem !important;
