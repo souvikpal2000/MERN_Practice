@@ -84,16 +84,16 @@ router.post("/adminreply/:email/:id", async (req, res) => {
             const { messages } = userData;
             const message = messages[messageId];
             if(message == undefined){
-                return res.status(403).json({message: "Message Unavailable"});
+                return res.status(403).json({status: 403, message: "Message Unavailable"});
             }
             const reply = new Reply({
                 desc: req.body.reply
             });
             message.replies.push(reply);
             await userData.save();
-            res.status(200).json({message: "Reply sent Successfully"});
+            res.status(200).json({status: 200, message: "Reply sent Successfully"});
         }else{
-            res.status(401).json({message: "This Email is not Registered"});
+            res.status(401).json({status: 401, message: "This Email is not Registered"});
         }
     }
     catch(err){
