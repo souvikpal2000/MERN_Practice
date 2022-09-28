@@ -55,25 +55,25 @@ router.delete("/delreply/:email/:messageId/:replyId", async (req,res) => {
     }
 });
 
-router.get("/adminreply/:email/:id", async (req, res) => {
-    const email = req.params.email;
-    const messageId = req.params.id;
-    try{
-        const userData = await User.findOne({email: email});
-        if(userData){
-            const { messages } = userData;
-            const message = messages[messageId];
-            if(message == undefined){
-                return res.status(403).json({status: "403",message: "Message Unavailable"});
-            }
-            res.status(200).json({status: "200", message: message.desc});
-        }else{
-            res.status(401).json({status: "401", message: "This Email is not Registered"});
-        }
-    }catch(err){
-        console.log(err);
-    }
-});
+// router.get("/adminreply/:email/:id", async (req, res) => {
+//     const email = req.params.email;
+//     const messageId = req.params.id;
+//     try{
+//         const userData = await User.findOne({email: email});
+//         if(userData){
+//             const { messages } = userData;
+//             const message = messages[messageId];
+//             if(message == undefined){
+//                 return res.status(403).json({status: "403",message: "Message Unavailable"});
+//             }
+//             res.status(200).json({status: "200", message: message.desc});
+//         }else{
+//             res.status(401).json({status: "401", message: "This Email is not Registered"});
+//         }
+//     }catch(err){
+//         console.log(err);
+//     }
+// });
 
 router.post("/adminreply/:email/:id", async (req, res) => {
     const email = req.params.email;
@@ -91,7 +91,7 @@ router.post("/adminreply/:email/:id", async (req, res) => {
             });
             message.replies.push(reply);
             await userData.save();
-            res.status(200).json({status: 200, message: "Reply sent Successfully"});
+            res.status(200).json({status: 200, message: {success: "Reply sent Successfully", reply: reply}});
         }else{
             res.status(401).json({status: 401, message: "This Email is not Registered"});
         }
