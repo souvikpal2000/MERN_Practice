@@ -326,7 +326,7 @@ textarea{
   justify-content: center;
   align-items: center;
 }
-.replyFormContainer{
+/* .replyFormContainer{
   height: 80vh;
   display: grid; 
   grid-template-columns: 50% 50%;
@@ -347,7 +347,7 @@ textarea{
 }
 .messageReply{
   margin-bottom: 0.7rem !important;
-}
+} */
 .cardFooter{
   display: flex;
   justify-content: space-between;
@@ -464,6 +464,7 @@ textarea{
   }
   .giveReply{
     width: 5rem !important;
+    height: 2rem !important;
     font-size: 0.7rem !important;
   }
   .modal{
@@ -471,7 +472,7 @@ textarea{
     right: 0;
     margin: auto;
   }
-  .giveReplyImage{
+  /* .giveReplyImage{
     width: 24rem;
   }
   .replyFormContainer{
@@ -481,5 +482,5 @@ textarea{
   }
   .replyFormContainer form{
     width: 100%;
-  }
+  } */
 }

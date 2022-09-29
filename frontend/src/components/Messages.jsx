@@ -1,10 +1,11 @@
 import React, { useEffect, useState, createContext, useContext } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Card from 'react-bootstrap/Card';
 import Spinner from "react-bootstrap/Spinner";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 const ModelContext = createContext();
 
@@ -36,9 +37,102 @@ const ReplyCard = ({messageId, replyId, ...reply}) => {
     )
 }
 
+const FormModal = () => {
+    const {user, setUser, formModel, setFormModel} = useContext(ModelContext);
+
+    const setReply = (e) => {
+        setFormModel((preValue) => {
+            return{
+                ...preValue,
+                reply: e.target.value
+            }
+        })
+    }
+
+    const close = () => {
+        setFormModel({
+            show: false,
+            messageId: "",
+            message: "",
+            url: "",
+            reply: ""
+        })
+    }
+    const sendReply = async () => {
+        if(formModel.reply){
+            try{
+                const res = await fetch(formModel.url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({reply: formModel.reply})
+                });
+                const data = await res.json();
+                if(data.status === 200){
+                    const {messages} = user;
+                    messages[formModel.messageId].replies.push(data.message.reply);
+                    setUser((preValue) => {
+                        return{
+                            ...preValue,
+                            messages: messages
+                        }
+                    });
+                    setFormModel({
+                        show: false,
+                        messageId: "",
+                        message: "",
+                        url: "",
+                        reply: ""
+                    });
+                }
+            }catch(err){
+                console.log(err)
+            }
+        }
+    }
+
+    return(
+        <>
+            <Modal show={formModel.show} onHide={close} backdrop="static" keyboard={false} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Send Reply</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Label>Message</Form.Label>
+                            <Form.Control as="textarea" rows={3} defaultValue={formModel.message} disabled/>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                            <Form.Label>Reply</Form.Label>
+                            <Form.Control as="textarea" rows={5} autoFocus onChange={setReply} value={formModel.reply}/>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={close}>Close</Button>
+                    <Button variant="primary" onClick={sendReply}>Send</Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    )
+}
+
 const MessageCard = ({messageId, ...message}) => {
     const [showReplies, setShowReplies] = useState(false);
-    const {user} = useContext(ModelContext);
+    const {user, setFormModel} = useContext(ModelContext);
+
+    const openFormModel = () => {
+        setFormModel({
+            show: true,
+            messageId: messageId,
+            message: message.desc,
+            url: `/adminreply/${user.email}/${messageId}`,
+            reply: ""
+        })
+    }
+    
     return(
         <>
             <Card>
@@ -48,7 +142,7 @@ const MessageCard = ({messageId, ...message}) => {
                         <Card.Text className="description">{message.desc}</Card.Text>
                     </div>
                     <div className="trashContent">
-                        <NavLink to={`/adminreply/${user.email}/${messageId}`} className="btn btn-secondary giveReply">Give Reply</NavLink>
+                        <Button className="btn btn-secondary giveReply" onClick={openFormModel}>Give Reply</Button>
                         {message.replies.length>0? 
                         <div>
                             {showReplies? <p className="minus" onClick={() => setShowReplies(!showReplies)}>➖</p> : <p className="plus" onClick={() => setShowReplies(!showReplies)}>➕</p>}
@@ -149,6 +243,13 @@ const Messages = () => {
         messageId: "",
         replyId: ""
     });
+    const [formModel, setFormModel] = useState({
+        show: false,
+        messageId: "",
+        message: "",
+        url: "",
+        reply: ""
+    })
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -179,7 +280,7 @@ const Messages = () => {
 
     return(
         <>
-            <ModelContext.Provider value={{model, setModel, user, setUser}}>
+            <ModelContext.Provider value={{model, setModel, user, setUser, formModel, setFormModel}}>
                 {spinner? 
                 <Container className="noMessageContainer">
                     <Spinner animation="border" variant="primary" />
@@ -203,6 +304,7 @@ const Messages = () => {
                 </Container>}
             
                 <VerticallyAlignedModel/>
+                <FormModal/>
             </ModelContext.Provider>
         </>
     )
