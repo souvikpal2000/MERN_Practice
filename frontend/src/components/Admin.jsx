@@ -14,13 +14,16 @@ export const PaginationContext = createContext();
 const Admin = () => {
     const [spinner, setSpinner] = useState(true);
     const [users, setUsers] = useState([]);
+    const [tempUsers, setTempUsers] = useState([]);
 
     const [page, setPage] = useState({
         pageNo: 0,
         start: 0,
         end: 2
     });
-    
+
+    //const [search, setSearch] = useState("");
+
     useEffect(() => {
         fetch("/admin", {
             method: "GET",
@@ -32,6 +35,7 @@ const Admin = () => {
         }).then((res) => {
            res.json().then((data) => {
                 setUsers(data.users);
+                setTempUsers(data.users);
                 closeSpinnerIn1Seconds();
            }).catch((err) => {
                 console.log(err);
@@ -47,6 +51,22 @@ const Admin = () => {
         }, 1000)
     }
 
+    const searchBy = (e) => {
+        const search = e.target.value.toLowerCase();
+        if(!search){
+            setUsers(tempUsers);
+            return;
+        }
+        const filteredData = tempUsers.filter((user) => {
+            const userDetails = {
+                name: user.name,
+                email: user.email
+            }
+            return JSON.stringify(userDetails).toLowerCase().includes(search);
+        });
+        setUsers(filteredData);
+    }
+
     return(
         <>
             <Common/>
@@ -54,7 +74,7 @@ const Admin = () => {
                 {spinner === true? 
                 <Spinner animation="border" variant="secondary" /> :
                 <Container className="adminContent"> 
-                    <Search/>
+                    <Search searchBy={searchBy}/>
                     <div className="profileCard">
                         {users.map((user,index) => {
                             if(page.start <= index && index <= page.end){
