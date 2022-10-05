@@ -65,6 +65,11 @@ const Admin = () => {
             return JSON.stringify(userDetails).toLowerCase().includes(search);
         });
         setUsers(filteredData);
+        setPage({
+            pageNo: 0,
+            start: 0,
+            end: 2
+        })
     }
 
     return(
