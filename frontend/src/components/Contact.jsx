@@ -156,7 +156,7 @@ const Contact = () => {
                                     </div>
                                 }
                                 <div className="input2">
-                                    <textarea required rows="8" name="message" id="message" class="form-control" value={contactInfo.message} onChange={input} placeholder="Enter Message..."></textarea>
+                                    <textarea required rows="8" name="message" id="message" className="form-control" value={contactInfo.message} onChange={input} placeholder="Enter Message..."></textarea>
                                 </div>
                                 <button className="btn btn-primary">Submit</button>
                             </form>
