@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Common from "./common/Common";
@@ -8,11 +8,81 @@ import Col from "react-bootstrap/Col";
 import Spinner from 'react-bootstrap/Spinner';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import profilePic from "../images/profile.jpg";
 import Profile from "./Profile";
 import Timeline from "./Timeline";
 
 export const UserValueContext = createContext();
+const ModelContext = createContext();
+
+const EditModal = () => {
+    const {showModel, setShowModel, state, setState} = useContext(ModelContext);
+    const [info, setInfo] = useState({
+        name: state.data.name,
+        phone: state.data.phone,
+        work: state.data.work
+    });
+
+    const editInfo = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        setInfo((preValue) => {
+            return{
+                ...preValue,
+                [name]: value
+            }
+        });
+    }
+    const close = () => {
+        setShowModel(false);
+    }
+    const edit = () => {
+        let data = state.data;
+        const updatedData = {
+            ...data,
+            ...info
+        }
+        setState((preValue) => {
+            return{
+                ...preValue,
+                data: updatedData
+            }
+        })
+        setShowModel(false);
+    }
+    return(
+        <>
+            <Modal show={showModel} onHide={close} backdrop="static" keyboard={false} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Details</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control type="text" value={info.name} name="name" onChange={editInfo} autoFocus required/>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                            <Form.Label>Phone</Form.Label>
+                            <Form.Control type="text" value={info.phone} name="phone" onChange={editInfo} required/>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                            <Form.Label>Profession</Form.Label>
+                            <Form.Control type="text" value={info.work} name="work" onChange={editInfo} required/>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={close}>Close</Button>
+                    <Button variant="primary" onClick={edit}>Edit</Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    )
+}
 
 const About = () => {
     const navigate = useNavigate();
@@ -22,6 +92,7 @@ const About = () => {
     });
     
     const [key, setKey] = useState('profile');
+    const [showModel, setShowModel] = useState(false);
 
     const fetchApi = async () => {
         try{
@@ -98,7 +169,7 @@ const About = () => {
                             </div>
                         </Col>
                         <Col className="col-12 col-md-2">
-                            <button className="btn btn-primary">Edit</button>
+                            <button className="btn btn-primary" onClick={() => setShowModel(true)}>Edit</button>
                         </Col>
                     </Row>
                     <Row>
@@ -109,6 +180,9 @@ const About = () => {
                             </UserValueContext.Provider>
                         </Col>
                     </Row>
+                    <ModelContext.Provider value={{showModel, setShowModel, state, setState}}>
+                        <EditModal/>
+                    </ModelContext.Provider>
                 </Container>}
             </div>
         </>
