@@ -50,9 +50,26 @@ const EditModal = () => {
                 ...preValue,
                 data: updatedData
             }
-        })
+        });
+
         setShowModel(false);
+
+        fetch("/about", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(info)
+        }).then(async (res) => {
+           const data = await res.json();
+           if(data.status === 200){
+                console.log("Updated Info");
+           }
+        }).catch((err) => {
+            console.log(err);
+        });
     }
+    
     return(
         <>
             <Modal show={showModel} onHide={close} backdrop="static" keyboard={false} centered>
